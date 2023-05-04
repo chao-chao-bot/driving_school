@@ -10,11 +10,10 @@ export const useStudent = (param?: Partial<Student>) => {
 	const stuMap: Record<string, string> = React.useMemo(() => {
 		const map: Record<string, string> = {};
 		data?.forEach(item => {
-			map[item.student_id] = item.name;
+			map[item.student_id + ""] = item.name;
 		});
 		return map;
 	}, [data]);
-
 	React.useEffect(() => {
 		run(fetchStudent(), {
 			retry: fetchStudent

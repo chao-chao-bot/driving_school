@@ -10,7 +10,7 @@ export const fetchExamList = async (param?: Partial<Exam>) => {
 
 //更新考试安排
 export const fetchUpdateExamList = async (param: Partial<Exam>) => {
-	const res = await http.post<Exam>(PORT1 + `/exam/update`, param);
+	const res = await http.post<Exam>(PORT1 + `/exam/edit`, param);
 	return res.data;
 };
 

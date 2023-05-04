@@ -4,7 +4,7 @@ import { Coach } from "@/typings/coach";
 
 // 更新教练信息
 export const updateCoachInfo = async (param: Coach) => {
-	const res = await http.post<Coach>(PORT1 + "/coach/info", param);
+	const res = await http.post<Coach>(PORT1 + "/coach/edit", param);
 	return res.data;
 };
 //添加教练信息

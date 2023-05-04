@@ -18,8 +18,8 @@ export default function Record() {
 
 	const [param, setParam] = useUrlNamehParams();
 	const { data: list, retry } = useExamRecord(param);
-	const { isLoading: stuLoading, stuMap } = useStudent();
-	const { isLoading: coachLoading, coachMap } = useCoach();
+	const { stuMap } = useStudent();
+	const { coachMap } = useCoach();
 	const handleChange = (key: string) => {
 		const newData = list?.filter(item => item.subject === key);
 		setData(newData || []);
@@ -51,7 +51,7 @@ export default function Record() {
 			title: "教练",
 			dataIndex: "coach_id",
 			key: "coach_id",
-			render: (value: string) => {
+			render: (value: number) => {
 				return <div>{coachMap[value]}</div>;
 			}
 		},

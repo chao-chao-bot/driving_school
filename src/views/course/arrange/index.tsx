@@ -7,21 +7,23 @@ import { ColumnsType } from "antd/lib/table";
 import styled from "styled-components";
 import "./index.less";
 import EditAddModal from "./components/EditAddModal";
-
 import { useCourse } from "@/utils/hooks/course";
-import { SearchPanel } from "@/components/searchpanel";
 import { Row } from "@/components/lib";
-import { useUrlNamehParams } from "@/utils/hooks/useUrlNameParams";
 import { useStudent } from "@/utils/hooks/student";
 import { useCoach } from "@/utils/hooks/coach";
-import { useAsync } from "@/hooks/useAsync";
 import { fetchDeleteCourseList } from "@/api/modules/course";
 // 课程管理模块 对课程进行增删改查  面向教练和学员 教练个数为1 学员个数最多为5
 // 如：新增科目1(可以增加多个重复科目1)--教练选择(教练可用才可选)--学员选择--练车场地---
 //改变教练状态--改变学员状态（已经暂停->正在学习）可以考虑新增授课记录
 export const CourseList = function () {
-	const [param, setParam] = useUrlNamehParams();
-	const { data: coursLsit, retry, isLoading: courseLoading } = useCourse(param);
+	const [coursLsit, setCoursLsit] = React.useState<Course[]>([]);
+
+	const { data, retry, isLoading: courseLoading } = useCourse();
+
+	React.useEffect(() => {
+		setCoursLsit(data || []);
+	}, [data]);
+
 	const { isLoading: stuLoading, stuMap } = useStudent();
 	const { isLoading: coachLoading, coachMap } = useCoach();
 	const isLoading = courseLoading && stuLoading && coachLoading;
@@ -53,7 +55,7 @@ export const CourseList = function () {
 			title: "教练",
 			dataIndex: "coach_id",
 			key: "coach_id",
-			render: (value: string) => {
+			render: (value: number) => {
 				return <>{coachMap[value]}</>;
 			}
 		},
@@ -78,13 +80,20 @@ export const CourseList = function () {
 		{
 			title: "操作",
 			key: "action",
-			render: (_: any, record) => {
+			render: (value: Course) => {
+				console.log("value===", value);
+
 				return (
 					<Space size="middle">
-						<Button onClick={handleEdit(record)} icon={<EditOutlined />} size="small" type="primary">
+						<Button onClick={handleEdit(value)} icon={<EditOutlined />} size="small" type="primary">
 							编辑
 						</Button>
-						<Popconfirm title={`确定要删除xx的记录吗`} onConfirm={confirm(record)} okText="确定" cancelText="取消">
+						<Popconfirm
+							title={`确定要删除 ${coachMap[value.coach_id]} 的课程记录吗`}
+							onConfirm={confirm(value)}
+							okText="确定"
+							cancelText="取消"
+						>
 							<Button icon={<DeleteOutlined />} size="small" danger type="primary">
 								删除
 							</Button>
@@ -97,6 +106,7 @@ export const CourseList = function () {
 	const handleClick = () => {
 		editChangeRef.current?.showModal();
 	};
+
 	return (
 		<div className="card content-box">
 			<Wrapper>
@@ -105,7 +115,6 @@ export const CourseList = function () {
 						<Button type="primary" icon={<PlusOutlined />} onClick={handleClick}>
 							新建课程
 						</Button>
-						<SearchPanel param={param} setParam={setParam} placeholder="请输入学员姓名" />
 					</Row>
 				</div>
 				<Table loading={isLoading} columns={columns} rowKey={"course_id"} dataSource={coursLsit || []} />

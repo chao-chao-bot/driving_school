@@ -8,13 +8,12 @@ export const useCoach = (param?: Partial<Coach>) => {
 	const { run, data, ...result } = useAsync<Coach[]>();
 	const fetchStudent = React.useCallback(() => fetchCoachList(cleanObject(param || {})), [param]);
 	const coachMap = React.useMemo(() => {
-		const map: Record<string, string> = {};
+		const map: Record<number, string> = {};
 		data?.forEach(item => {
 			map[item.coach_id] = item.name;
 		});
 		return map;
 	}, [data]);
-
 	React.useEffect(() => {
 		run(fetchStudent(), {
 			retry: fetchStudent

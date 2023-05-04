@@ -37,9 +37,9 @@ export default function EditAddModal(props: EditAddModalProps) {
 			await mutateCoach(isEdit ? fetchUpdateCourseList(values) : fetchAddCourseList(values));
 			retry();
 			setModalVisible(false);
-			message.success("修改用户信息成功");
+			message.success(` ${isEdit ? "编辑" : "添加"}课程信息成功`);
 		} catch (errorInfo) {
-			message.warn("修改用户信息失败");
+			message.warn(`${isEdit ? "编辑" : "添加"}课程信息失败`);
 			console.log("Failed:", errorInfo);
 		}
 	};

@@ -68,7 +68,7 @@ export default function Plan() {
 			title: "负责教练",
 			dataIndex: "coach_id",
 			key: "coach_id",
-			render: (value: string) => {
+			render: (value: number) => {
 				return <>{coachMap[value]}</>;
 			}
 		},
