@@ -14,19 +14,11 @@ import { useStudent } from "@/utils/hooks/student";
 import { useCoach } from "@/utils/hooks/coach";
 
 export default function Record() {
-	const [data, setData] = React.useState<ExamRecord[]>([]);
-
 	const [param, setParam] = useUrlNamehParams();
 	const { data: list, retry } = useExamRecord(param);
 	const { stuMap } = useStudent();
 	const { coachMap } = useCoach();
-	const handleChange = (key: string) => {
-		const newData = list?.filter(item => item.subject === key);
-		setData(newData || []);
-	};
-	React.useEffect(() => {
-		setData(list?.filter(item => item.subject === Subject.SUBJEC1) || []);
-	}, [list]);
+	const [tabKey, setTabKey] = React.useState<string>(Subject.SUBJEC1);
 	const confirm = (record: ExamRecord) => async () => {
 		//发送删除请求
 		const res = await fetchDeleteRecordList(record);
@@ -38,12 +30,16 @@ export default function Record() {
 		retry();
 	};
 
+	const data = React.useMemo(() => {
+		return list?.filter(item => item.subject === tabKey) || [];
+	}, [list, tabKey]);
+
 	const columns: ColumnsType<ExamRecord> = [
 		{
 			title: "学员",
 			dataIndex: "student_id",
 			key: "student_id",
-			render: (value: string) => {
+			render: (value: number) => {
 				return <div>{stuMap[value]}</div>;
 			}
 		},
@@ -79,9 +75,14 @@ export default function Record() {
 		{
 			title: "操作",
 			key: "action",
-			render: (_, record) => (
+			render: (value: ExamRecord) => (
 				<Space size="middle">
-					<Popconfirm title={`确定要删除${record.studen_id}的记录吗`} onConfirm={confirm(record)} okText="确定" cancelText="取消">
+					<Popconfirm
+						title={`确定要删除 ${stuMap[value.student_id]} 的记录吗`}
+						onConfirm={confirm(value)}
+						okText="确定"
+						cancelText="取消"
+					>
 						<Button type="primary" danger>
 							删除
 						</Button>
@@ -93,7 +94,7 @@ export default function Record() {
 
 	return (
 		<div className="card content-box">
-			<Tabs onChange={handleChange}>
+			<Tabs onChange={setTabKey} activeKey={tabKey}>
 				{SubjectArr.map(item => {
 					return (
 						<Tabs.TabPane tab={item.label} key={item.key}>

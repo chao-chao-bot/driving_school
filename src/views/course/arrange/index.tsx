@@ -12,14 +12,15 @@ import { Row } from "@/components/lib";
 import { useStudent } from "@/utils/hooks/student";
 import { useCoach } from "@/utils/hooks/coach";
 import { fetchDeleteCourseList } from "@/api/modules/course";
+import { useUrlNamehParams } from "@/utils/hooks/useUrlNameParams";
+import { SearchPanel } from "@/components/searchpanel";
 // 课程管理模块 对课程进行增删改查  面向教练和学员 教练个数为1 学员个数最多为5
 // 如：新增科目1(可以增加多个重复科目1)--教练选择(教练可用才可选)--学员选择--练车场地---
 //改变教练状态--改变学员状态（已经暂停->正在学习）可以考虑新增授课记录
 export const CourseList = function () {
+	const [param, setParam] = useUrlNamehParams();
 	const [coursLsit, setCoursLsit] = React.useState<Course[]>([]);
-
-	const { data, retry, isLoading: courseLoading } = useCourse();
-
+	const { data, retry, isLoading: courseLoading } = useCourse(param);
 	React.useEffect(() => {
 		setCoursLsit(data || []);
 	}, [data]);
@@ -112,6 +113,7 @@ export const CourseList = function () {
 			<Wrapper>
 				<div className="searchpanel">
 					<Row between={true}>
+						<SearchPanel param={param} setParam={setParam} />
 						<Button type="primary" icon={<PlusOutlined />} onClick={handleClick}>
 							新建课程
 						</Button>

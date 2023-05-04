@@ -26,7 +26,7 @@ import { fetchDeleteExamList } from "@/api/modules/exam";
 */
 export default function Plan() {
 	const [param, setParam] = useUrlNamehParams();
-	const { data: examList, retry } = useExam();
+	const { data: examList, retry } = useExam(param);
 	const editChangeRef = React.useRef<ModalProps>(null);
 	const confirm = (exam: Exam) => async () => {
 		const res = await fetchDeleteExamList(exam.exam_id);
@@ -38,7 +38,7 @@ export default function Plan() {
 		retry();
 	};
 	const handleEdit = (exam: Exam) => () => {
-		console.log(exam);
+		console.log("exam===", exam);
 		editChangeRef.current?.showModal(exam);
 	};
 	const handleAdd = () => {
@@ -115,18 +115,18 @@ export default function Plan() {
 		{
 			title: "操作",
 			key: "action",
-			render: (_: any, record) => {
+			render: (value: Exam) => {
 				return (
 					<Space size="middle">
-						<Button onClick={handleEdit(record)} icon={<EditOutlined />} size="small" type="primary">
+						<Button onClick={handleEdit(value)} icon={<EditOutlined />} size="small" type="primary">
 							编辑
 						</Button>
-						<Popconfirm title={`确定要删除当前记录吗`} onConfirm={confirm(record)} okText="确定" cancelText="取消">
+						<Popconfirm title={`确定要删除当前记录吗`} onConfirm={confirm(value)} okText="确定" cancelText="取消">
 							<Button icon={<DeleteOutlined />} size="small" danger type="primary">
 								删除
 							</Button>
 						</Popconfirm>
-						<Switch checkedChildren="开始" unCheckedChildren="结束" defaultChecked={false} onChange={handleStartExam(record)} />
+						<Switch checkedChildren="开始" unCheckedChildren="结束" defaultChecked={false} onChange={handleStartExam(value)} />
 					</Space>
 				);
 			}

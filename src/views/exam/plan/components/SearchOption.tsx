@@ -15,13 +15,12 @@ interface SearchOptionProps {
 }
 export default function SearchOption(props: SearchOptionProps) {
 	const { param, setParam, handleAdd } = props;
-	console.log("param-===", param);
 	return (
 		<SearchOptionWrapper>
-			<SearchPanel param={param} setParam={setParam}></SearchPanel>
 			<Button type="primary" onClick={handleAdd} icon={<PlusOutlined />}>
 				新增
 			</Button>
+			<SearchPanel param={param} setParam={setParam}></SearchPanel>
 		</SearchOptionWrapper>
 	);
 }

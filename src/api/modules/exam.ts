@@ -21,7 +21,7 @@ export const fetchAddExamList = async (param?: Partial<Exam>) => {
 };
 
 //删除考试
-export const fetchDeleteExamList = async (Exam_id: number) => {
-	const res = await http.post<Exam>(PORT1 + `/exam/delete`, { Exam_id });
+export const fetchDeleteExamList = async (exam_id: number) => {
+	const res = await http.post<Exam>(PORT1 + `/exam/delete`, { exam_id });
 	return res;
 };
