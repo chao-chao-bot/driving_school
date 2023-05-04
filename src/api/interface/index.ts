@@ -1,7 +1,7 @@
 // * 请求响应参数(不包含data)
 export interface Result {
 	code: number;
-	msg: string;
+	desc: string;
 }
 
 // * 请求响应参数(包含data)
@@ -26,11 +26,13 @@ export interface ReqPage {
 // * 登录
 export namespace Login {
 	export interface ReqLoginForm {
-		username: string;
+		name: string;
 		password: string;
 		confirm_password?: string;
 	}
 	export interface ResLogin {
+		id: number;
+		name: string;
 		access_token: string;
 	}
 	export interface ResAuthButtons {

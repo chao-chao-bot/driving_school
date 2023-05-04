@@ -1,9 +1,9 @@
-import { Coach, Student, Subject } from "..";
+import { Student, Subject } from "..";
 
 export type Course = {
-	course_id: string;
+	course_id: number;
 	subject: Subject;
-	coach_id: string;
+	coach_id: number;
 	studentArr: Student[];
 	palce: string;
 };

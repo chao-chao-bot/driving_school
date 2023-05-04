@@ -8,6 +8,7 @@ import "./index.less";
 import { Student } from "@/typings/students";
 import { useAsync } from "@/hooks/useAsync";
 import { fetchAddStudent, updateSutdentInfo } from "@/api/modules/student";
+import CoachSelect from "@/components/coachSelect";
 
 interface EditAddModalProps {
 	innerRef: Ref<ModalProps>;
@@ -87,15 +88,8 @@ const EditAddModal = (props: EditAddModalProps) => {
 				<Form.Item label="毕业日期" name="end_date" rules={[{ required: true }]}>
 					<DatePicker />
 				</Form.Item>
-				<Form.Item label="当前教练" name="coach" rules={[{ required: true, message: "请选择教练" }]}>
-					<Select
-						options={[
-							{ value: "jack", label: "Jack" },
-							{ value: "lucy", label: "Lucy" },
-							{ value: "Yiminghe", label: "yiminghe" },
-							{ value: "disabled", label: "Disabled", disabled: true }
-						]}
-					/>
+				<Form.Item label="当前教练" name="coach_id" rules={[{ required: true, message: "请选择教练" }]}>
+					<CoachSelect />
 				</Form.Item>
 				<Form.Item label="学习状态" name="status" rules={[{ required: true, message: "请选择学员状态" }]}>
 					<Select

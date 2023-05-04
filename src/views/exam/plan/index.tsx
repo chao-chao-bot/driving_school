@@ -30,7 +30,7 @@ export default function Plan() {
 	const editChangeRef = React.useRef<ModalProps>(null);
 	const confirm = (exam: Exam) => async () => {
 		const res = await fetchDeleteExamList(exam.exam_id);
-		if (res.code === 200 || res.msg === "成功") {
+		if (res.code === 200 || res.desc === "success") {
 			message.success("删除成功");
 		} else {
 			message.error("删除失败");

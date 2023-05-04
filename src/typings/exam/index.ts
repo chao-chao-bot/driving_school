@@ -1,9 +1,9 @@
 import { Subject } from "..";
 
 export type Exam = {
-	exam_id: string;
-	studentArr: string[];
-	coach_id: string;
+	exam_id: number;
+	studentArr: number[];
+	coach_id: number;
 	subject: Subject;
 	start_date: any;
 	cost: number;

@@ -24,5 +24,3 @@ export const SET_THEME_CONFIG = "SET_THEME_CONFIG";
 export const SET_USER_INFO = "SET_USER_INFO";
 //设置 studentList
 export const SET_STUDENT_LIST = "SET_STUDENT_LIST";
-//更新 studentList
-export const UPDATE_STUDENT_LIST = "UPDATE_STUDENT_LIST";

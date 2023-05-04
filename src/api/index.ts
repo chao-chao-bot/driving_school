@@ -39,7 +39,7 @@ class RequestHttp {
 				// * 如果当前请求不需要显示 loading,在api服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading，参见loginApi
 				config.headers!.noLoading || showFullScreenLoading();
 				const token: string = store.getState().global.token;
-				return { ...config, headers: { ...config.headers, "x-access-token": token } };
+				return { ...config, headers: { ...config.headers, Authorization: token } };
 			},
 			(error: AxiosError) => {
 				return Promise.reject(error);
@@ -64,8 +64,7 @@ class RequestHttp {
 					window.location.hash = "/login";
 					return Promise.reject(data);
 				}
-				// * 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
-				if (data.code && data.code !== ResultEnum.SUCCESS) {
+				if (data.code !== ResultEnum.SUCCESS) {
 					message.error(data.desc);
 					return Promise.reject(data);
 				}

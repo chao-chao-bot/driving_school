@@ -20,7 +20,7 @@ export const fetchAddCourseList = async (param?: Partial<Course>) => {
 };
 
 //删除课程
-export const fetchDeleteCourseList = async (course_id: string) => {
+export const fetchDeleteCourseList = async (course_id: number) => {
 	const res = await http.post<Course>(PORT1 + `/corse/delete`, { course_id });
 	return res;
 };

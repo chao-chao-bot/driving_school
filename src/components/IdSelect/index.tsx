@@ -6,7 +6,7 @@ import * as React from "react";
 interface IdSelectProps extends Omit<SelectProps, "value" | "options" | "defaultOptionName"> {
 	value?: Raw | undefined | null;
 	defaultOptionName?: string;
-	options?: { name: string; id: string; disabled?: boolean }[];
+	options?: { name: string; id: number; disabled?: boolean }[];
 }
 
 /**

@@ -7,9 +7,12 @@ import Language from "./components/Language";
 import Theme from "./components/Theme";
 import Fullscreen from "./components/Fullscreen";
 import "./index.less";
+import { store } from "@/redux";
 
 const LayoutHeader = () => {
 	const { Header } = Layout;
+	const userInfo = store.getState().global.userInfo;
+	console.log(userInfo);
 
 	return (
 		<Header>
@@ -22,7 +25,7 @@ const LayoutHeader = () => {
 				<Language />
 				<Theme />
 				<Fullscreen />
-				<span className="username">Hooks</span>
+				<span className="username">{userInfo.name}</span>
 				<AvatarIcon />
 			</div>
 		</Header>

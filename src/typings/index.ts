@@ -1,6 +1,7 @@
 export * from "./students";
 export * from "./coach";
 export * from "./exam";
+export * from "./user";
 
 export enum Status {
 	READY = "ready",

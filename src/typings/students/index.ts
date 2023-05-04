@@ -2,7 +2,7 @@ import { MapOption, Status } from "..";
 import { map } from "lodash-es";
 
 export type Student = {
-	student_id: string;
+	student_id: number;
 	name: string;
 	address: string;
 	phone_number: string;
@@ -10,6 +10,7 @@ export type Student = {
 	start_date: any;
 	end_date: any;
 	status: Status;
+	coach_id: number;
 };
 
 export enum Subject {

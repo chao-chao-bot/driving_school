@@ -9,7 +9,7 @@ export const fetchStudentList = async (param?: Partial<Student>) => {
 };
 // 更新学生信息
 export const updateSutdentInfo = async (param: Student) => {
-	const res = await http.post<Student>(PORT1 + "/student/info", param);
+	const res = await http.post<Student>(PORT1 + "/student/edit", param);
 	return res.data;
 };
 //添加学员信息

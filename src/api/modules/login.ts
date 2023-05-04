@@ -9,11 +9,11 @@ import http from "@/api";
  */
 // * 用户登录接口
 export const loginApi = (params: Login.ReqLoginForm) => {
-	return http.post<Login.ResLogin>(PORT1 + `/login`, params);
+	return http.post<Login.ResLogin>(PORT1 + `/auth/login`, params);
 };
 //用户注册
 export const registerApi = (params: Login.ReqLoginForm) => {
-	return http.post<Login.ResLogin>(PORT1 + `/register`, params);
+	return http.post<Login.ResLogin>(PORT1 + `/auth/register`, params);
 };
 
 // * 获取按钮权限

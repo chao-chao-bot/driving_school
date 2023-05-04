@@ -14,6 +14,7 @@ import { useStudent } from "@/utils/hooks/student";
 
 import { SearchPanel } from "@/components/searchpanel";
 import { useUrlNamehParams } from "@/utils/hooks/useUrlNameParams";
+import { useCoach } from "@/utils/hooks/coach";
 
 const StudentList = (props: any) => {
 	const { studentList, setStudentList } = props;
@@ -26,11 +27,20 @@ const StudentList = (props: any) => {
 	}, [setStudentList, stuList]);
 	const editChangeRef = React.useRef<ModalProps>(null);
 	const deleteRef = React.useRef<ModalProps>(null);
+	const { coachMap } = useCoach();
 	const columns: ColumnsType<Student> = [
 		{
 			title: "姓名",
 			dataIndex: "name",
 			key: "name"
+		},
+		{
+			title: "当前教练",
+			dataIndex: "coach_id",
+			key: "coach_id",
+			render: (value: string) => {
+				return <>{coachMap[value]}</>;
+			}
 		},
 		{
 			title: "联系电话",

@@ -8,7 +8,7 @@ export const CoachStatusMap: Record<CoachStatus, string> = {
 	[CoachStatus.UNAVAILABLE]: "教学中"
 };
 export type Coach = {
-	coach_id: string;
+	coach_id: number;
 	name: string;
 	phone_number: string;
 	email: string;

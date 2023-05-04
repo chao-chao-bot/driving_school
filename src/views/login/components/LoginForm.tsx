@@ -7,7 +7,7 @@ import { Login } from "@/api/interface";
 import { loginApi, registerApi } from "@/api/modules/login";
 import { HOME_URL } from "@/config/config";
 import { connect } from "react-redux";
-import { setToken } from "@/redux/modules/global/action";
+import { setToken, setUserInfo } from "@/redux/modules/global/action";
 import { useTranslation } from "react-i18next";
 import { setTabsList } from "@/redux/modules/tabs/action";
 import { UserOutlined, LockOutlined, CloseCircleOutlined } from "@ant-design/icons";
@@ -16,7 +16,7 @@ import { useMount } from "@/hooks/useMount";
 const LoginForm = (props: any) => {
 	const [isRegister, setisRegister] = React.useState(false);
 	const { t } = useTranslation();
-	const { setToken, setTabsList } = props;
+	const { setToken, setTabsList, setUserInfo } = props;
 	const navigate = useNavigate();
 	const [form] = Form.useForm();
 	const [loading, setLoading] = useState<boolean>(false);
@@ -40,6 +40,7 @@ const LoginForm = (props: any) => {
 			const { data } = await loginApi(loginForm);
 			setToken(data?.access_token);
 			setTabsList([]);
+			setUserInfo({ id: data?.id, name: data?.name });
 			message.success("登录成功！");
 			navigate(HOME_URL);
 		} finally {
@@ -52,7 +53,7 @@ const LoginForm = (props: any) => {
 	};
 	useMount(() => {
 		form.setFieldValue("password", "123456");
-		form.setFieldValue("username", "admin");
+		form.setFieldValue("name", "admin");
 	});
 
 	return (
@@ -66,7 +67,7 @@ const LoginForm = (props: any) => {
 			size="large"
 			autoComplete="off"
 		>
-			<Form.Item name="username" rules={[{ required: true, message: "请输入用户名" }]}>
+			<Form.Item name="name" rules={[{ required: true, message: "请输入用户名" }]}>
 				<Input placeholder="用户名：admin / user" prefix={<UserOutlined />} />
 			</Form.Item>
 			<Form.Item name="password" rules={[{ required: true, message: "请输入密码" }]}>
@@ -99,5 +100,5 @@ const LoginForm = (props: any) => {
 	);
 };
 
-const mapDispatchToProps = { setToken, setTabsList };
+const mapDispatchToProps = { setToken, setTabsList, setUserInfo };
 export default connect(null, mapDispatchToProps)(LoginForm);
