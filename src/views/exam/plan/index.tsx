@@ -50,16 +50,16 @@ export default function Plan() {
 		if (start) {
 			//模拟考试 过程1s钟
 			let timer: any = null;
-			const p = new Promise(resolve => {
+			const p = new Promise<boolean>(resolve => {
 				timer = setTimeout(() => {
 					resolve(Math.random() < 0.5);
 				}, 1000);
 			});
-			p.then(async pass => {
+			p.then(async (pass: boolean) => {
 				//发送添加考试记录的请求
 				message.info(`考试结束，${coachMap[record.coach_id]}带领的学员均${pass ? "" : "未"}通过考试`);
 				clearTimeout(timer);
-				await fetchAdddRecordList({ ...record, pass: false });
+				await fetchAdddRecordList({ ...record, pass });
 			});
 		}
 	};

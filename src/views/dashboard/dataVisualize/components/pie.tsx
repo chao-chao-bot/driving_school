@@ -1,15 +1,19 @@
 import { useEcharts } from "@/hooks/useEcharts";
-
-const Curve = () => {
+interface CurveProps {
+	passSum: number;
+	failSum: number;
+}
+const Curve = (props: CurveProps) => {
+	const { passSum, failSum } = props;
 	const pieData: any = [
-		{ value: 5000, name: "Gitee 访问量" },
-		{ value: 5000, name: "GitHub 访问量" }
+		{ value: failSum, name: "未通过" },
+		{ value: passSum, name: "通过" }
 	];
 	const option: any = {
 		title: {
-			text: "Gitee / GitHub",
-			subtext: "访问占比",
-			left: "56%",
+			text: "通过/ 未通过",
+			subtext: "考试结果占比",
+			left: "50%",
 			top: "45%",
 			textAlign: "center",
 			textStyle: {
@@ -53,7 +57,7 @@ const Curve = () => {
 			{
 				type: "pie",
 				radius: ["70%", "40%"],
-				center: ["57%", "52%"],
+				center: ["50%", "50%"],
 				silent: true,
 				clockwise: true,
 				startAngle: 150,
