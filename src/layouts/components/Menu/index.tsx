@@ -18,6 +18,7 @@ const LayoutMenu = (props: any) => {
 
 	const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
 	const [openKeys, setOpenKeys] = useState<string[]>([]);
+	console.log("selectedKeys---", selectedKeys, openKeys);
 
 	// 刷新页面菜单保持高亮
 	useEffect(() => {
@@ -97,7 +98,7 @@ const LayoutMenu = (props: any) => {
 		if (route.isLink) window.open(route.isLink, "_blank");
 		navigate(key);
 	};
-
+	console.log("menuList====", menuList, openKeys);
 	return (
 		<div className="menu">
 			<Spin spinning={loading} tip="Loading...">
@@ -106,7 +107,6 @@ const LayoutMenu = (props: any) => {
 					theme="dark"
 					mode="inline"
 					triggerSubMenuAction="click"
-					openKeys={openKeys}
 					selectedKeys={selectedKeys}
 					items={menuList}
 					onClick={clickMenu}
